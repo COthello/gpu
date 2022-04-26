@@ -217,6 +217,12 @@ agx_create_command_queue(mach_port_t connection)
 		kern_return_t ret = IOConnectCallScalarMethod(connection,
 				0x29, 
 				scalars, 2, NULL, NULL);
+		// try on m1 pro
+		if (ret != 0) {
+			ret = IOConnectCallScalarMethod(connection,
+					0x30, 
+					scalars, 2, NULL, NULL);
+		}
 
 		assert(ret == 0);
 	}
