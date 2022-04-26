@@ -46,8 +46,16 @@ int main(int argc, char **argv)
 		IOServiceGetMatchingService(kIOMasterPortDefault, matching);
 
 	if (!service) {
-		fprintf(stderr, "G13 (B0) accelerator not found\n");
-		return 1;
+		fprintf(stderr, "G13 (B0) accelerator not found, try m1 pro gpu\n");
+		// try on m1 pro
+		CFDictionaryRef matching = IOServiceNameMatching("AGXAcceleratorG13X");
+		service =
+		IOServiceGetMatchingService(kIOMasterPortDefault, matching);
+		if (!service) {
+			fprintf(stderr, "m1 pro gpu still not found\n");
+			return 1;
+		}
+
 	}
 
 	io_connect_t connection = 0;
